@@ -3,7 +3,9 @@ import pandas as pd
 from ta.momentum import ROCIndicator
 import yfinance
 
-XLU, VTI, SPY = yfinance.download(["XLU", "VTI", "SPY"], start=today-timedelta(weeks=52), end=today)
+XLU = yfinance.download("XLU", start=today-timedelta(weeks=52), end=today)
+VTI = yfinance.download("VTI", start=today-timedelta(weeks=52), end=today)
+SPY = yfinance.download("SPY", start=today-timedelta(weeks=52), end=today)
 
 dfOp = XLU.iloc[:,0] / VTI.iloc[:,0]
 dfHi = XLU.iloc[:,1] / VTI.iloc[:,1]
@@ -32,5 +34,8 @@ dfHi = dfHi.iloc[:,0].apply(int) - dfHi.iloc[:,1].apply(int)
 dfLo = dfLo.iloc[:,0].apply(int) - dfLo.iloc[:,1].apply(int)
 dfCl = dfCl.iloc[:,0].apply(int) - dfCl.iloc[:,1].apply(int)
 
-dfSum = dfOp + dfHi + dfLo + dfCl
-dfRet = pd.concat([dfSum, dfRoc, SPY], axis=1)
+dfRet = pd.concat([SPY, dfRoc, dfSum], axis=1)
+dfRet.index.name = 'Date'
+dfRet.columns = ['Open','High','Low','Close','Adjusted','Volume','ROC.Open','ROC.High','ROC.Low','ROC.Close','Dbs']
+
+dfRet['DbsMa'] = dfRet['Dbs'].rolling(7).mean()
