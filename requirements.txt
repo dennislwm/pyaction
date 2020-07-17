@@ -3,4 +3,5 @@ mpl_finance
 numpy==1.18.5
 pandas==1.0.5
 quandl
+ta
 yfinance==0.1.54
