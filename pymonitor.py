@@ -25,11 +25,11 @@ dfRatio.columns = ['Open', 'High', 'Low', 'Close', 'Adjusted', 'Volume']
 """
 | Calculate rate of change from ta
 """
-dfOp = ROCIndicator(close=dfRatio["Open"], n=20)
-dfHi = ROCIndicator(close=dfRatio["High"], n=20)
-dfLo = ROCIndicator(close=dfRatio["Low"], n=20)
-dfCl = ROCIndicator(close=dfRatio["Close"], n=20)
-dfRoc = pd.concat([dfOp, dfHi, dfLo, dfCl], axis=1)
+taOp = ROCIndicator(close=dfRatio["Open"], n=20)
+taHi = ROCIndicator(close=dfRatio["High"], n=20)
+taLo = ROCIndicator(close=dfRatio["Low"], n=20)
+taCl = ROCIndicator(close=dfRatio["Close"], n=20)
+dfRoc = pd.concat([taOp.roc(), taHi.roc(), taLo.roc(), taCl.roc()], axis=1)
 dfRoc.columns = ['Open', 'High', 'Low', 'Close']
 
 """
