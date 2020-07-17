@@ -1,0 +1,8 @@
+matplotlib==3.2.2
+mpl_finance
+numpy==1.18.5
+pandas==1.0.5
+quandl
+shelve
+talib
+yfinance==0.1.54
