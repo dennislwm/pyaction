@@ -5,7 +5,7 @@ name: pymonitor
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-# * * * * *  command to execute
+# * * * * *  UTC (Convert to Singapore: +0800)
 # ┬ ┬ ┬ ┬ ┬
 # │ │ │ │ └───── day of week (0 - 7) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
 # │ │ │ └────────── month (1 - 12)
@@ -16,7 +16,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    - cron:  '59 0 * * *'
+    - cron:  '59 12 * * *'
     
 jobs:
   build:

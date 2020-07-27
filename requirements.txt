@@ -1,8 +1,5 @@
-matplotlib==3.2.2
-mpl_finance
 numpy==1.18.5
 pandas==1.0.5
-pyrenko==0.1
-quandl
+pyfxgit==0.0.1
 ta
 yfinance==0.1.54

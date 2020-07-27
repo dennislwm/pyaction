@@ -1,3 +1,8 @@
+"""--------+---------+---------+---------+---------+---------+---------+---------+---------|
+|                                C U S T O M   L I B R A R Y                               |
+|----------+---------+---------+---------+---------+---------+---------+---------+-------"""
+from pyfxgit.ChartCls import ChartCls
+
 from datetime import date, datetime, timedelta; today = date.today()
 import pandas as pd
 from ta.momentum import ROCIndicator
@@ -60,4 +65,16 @@ dfRet['DbsMa'] = dfRet['Dbs'].rolling(7).mean()
 """
 | Plot chart
 """
-print("Success **TODO** save chart")
+chart = ChartCls(dfRet, intSub=2)
+chart.BuildOscillator(1, dfRet['Dbs'], intUpper=3, intLower=-3, strTitle="Dbs")
+chart.BuildOscillator(0, dfRet['DbsMa'], intUpper=3.75, intLower=-3.75, strTitle="DbsMa")
+lstTag = chart.BuildOscillatorTag(dfRet, 'DbsMa', 3.75)
+chart.MainAddSpan(dfRet['Tag'], lstTag[lstTag>0], 0.2, 'red')
+chart.MainAddSpan(dfRet['Tag'], lstTag[lstTag<0], 0.2, 'green')
+chart.BuildMain(strTitle="SPY")
+
+"""
+| Save chart
+"""
+chart.save("Dbs")
+print("Success: Saved chart")
