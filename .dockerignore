@@ -1,0 +1,6 @@
+.dockerignore
+.git*
+_ChartC_0.1_Dbs.png
+actions.yml
+docker-compose.yml
+__pycache__/

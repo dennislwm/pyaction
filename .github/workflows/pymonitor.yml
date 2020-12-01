@@ -41,8 +41,11 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run Python script
+      env: 
+        INPUT_GMAIL: ${{ secrets.GMAIL }}
+        INPUT_GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       run: |
-        python pymonitor.py
+        python3 pymonitor.py
 
     # Update git repository
     - name: Commit and push if changed
