@@ -44,11 +44,12 @@ def getConfig():
   #-------------------------
   # Read from os environment
   if not os.path.exists("config.yaml"):
-    config["pymonitor"]["gmail"] = os.environ['INPUT_GMAIL']
+    if 'INPUT_GMAIL' in os.environ:
+      config["pymonitor"]["gmail"] = os.environ['INPUT_GMAIL']
+    if 'INPUT_GMAIL_APP_PASSWORD' in os.environ:
     config["pymonitor"]["gmail_app_password"] = os.environ['INPUT_GMAIL_APP_PASSWORD']
 
   print( config["pymonitor"]["gmail"] )
-  print( os.environ['GMAIL'] )
   return config
 
 """
