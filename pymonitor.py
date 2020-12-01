@@ -47,6 +47,8 @@ def getConfig():
     config["pymonitor"]["gmail"] = os.environ['INPUT_GMAIL']
     config["pymonitor"]["gmail_app_password"] = os.environ['INPUT_GMAIL_APP_PASSWORD']
 
+  print( config["pymonitor"]["gmail"] )
+  print( os.environ['GMAIL'] )
   return config
 
 """
