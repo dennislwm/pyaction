@@ -17,7 +17,7 @@ import smtplib
 import os
 
 DBS_LIMIT = 3.75
-DBS_PERIOD = 9   # previous 7
+DBS_PERIOD = 12   # previous 7
 DBS_NEUTRAL = 'NEUTRAL'
 DBS_BULL = 'BULLISH'
 DBS_BEAR = 'BEARISH'
