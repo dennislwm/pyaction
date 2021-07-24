@@ -12,7 +12,9 @@ import yfinance
 # Standard library
 #   Gmail setup: https://myaccount.google.com/apppasswords
 from datetime import date, datetime, timedelta; today = date.today()
-from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 import smtplib
 import os
 
@@ -180,11 +182,16 @@ def send_gmail(strSubject, strBody):
     return
   
   print("Send email " + strSubject) 
-  msg = EmailMessage()
-  msg['Subject'] = strSubject
-  msg['From'] = strGmail
-  msg['To'] = strGmail
-  msg.set_content(strBody)
+  msg = MIMEMultipart()
+  msg['Subject']  = strSubject
+  msg['From']     = strGmail
+  msg['To']       = strGmail
+  msg.attach( MIMEText( strBody, 'plain') )
+  to_file = '_ChartC_0.1_Dbs.png'
+  with open(to_file, 'rb') as attach:
+    img = MIMEImage(attach.read())
+    img.add_header('Content-ID', '<{}>'.format(to_file))
+    msg.attach(img)
   with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
     smtp.login(strGmail, strGmailAppPwd)
     smtp.send_message(msg)
