@@ -3,4 +3,4 @@ pandas==1.0.5
 pyfxgit==0.0.1
 ruamel.yaml==0.16.12
 ta==0.6.1
-yfinance==0.1.63
+yfinance==0.1.96
