@@ -57,20 +57,24 @@ def getConfig():
 | Download data from yfinance
 """
 def getSymbols():
-  XLU = yfinance.download("XLU", start=today-timedelta(weeks=52), end=today)
-  VTI = yfinance.download("VTI", start=today-timedelta(weeks=52), end=today)
-  SPY = yfinance.download("SPY", start=today-timedelta(weeks=52), end=today)
+  XLU = yfinance.download("XLU", auto_adjust=False, start=today-timedelta(weeks=52), end=today)
+  VTI = yfinance.download("VTI", auto_adjust=False, start=today-timedelta(weeks=52), end=today)
+  SPY = yfinance.download("SPY", auto_adjust=False, start=today-timedelta(weeks=52), end=today)
   return XLU, VTI, SPY
 
 """
 | Calculate ration XLU/VLI
 """
 def calcRatio(XLU, VTI, SPY):
-  dfOp = XLU.iloc[:,0] / VTI.iloc[:,0]
-  dfHi = XLU.iloc[:,1] / VTI.iloc[:,1]
-  dfLo = XLU.iloc[:,2] / VTI.iloc[:,2]
-  dfCl = XLU.iloc[:,3] / VTI.iloc[:,3]
-  dfAd = XLU.iloc[:,4] / VTI.iloc[:,4]
+  #-----------------
+  # Calculate ratio
+  #   Open, High, Low, Close, Adjusted, Volume (deprecated yfinance==0.1.87)
+  #   Adjusted, Close, High, Low, Open, Volume (yfinance==0.2.54)
+  dfOp = XLU.iloc[:,4] / VTI.iloc[:,4]
+  dfHi = XLU.iloc[:,2] / VTI.iloc[:,2]
+  dfLo = XLU.iloc[:,3] / VTI.iloc[:,3]
+  dfCl = XLU.iloc[:,1] / VTI.iloc[:,1]
+  dfAd = XLU.iloc[:,0] / VTI.iloc[:,0]
   dfVo = XLU.iloc[:,5] / VTI.iloc[:,5]
   dfRatio = pd.concat([dfOp, dfHi, dfLo, dfCl, dfAd, dfVo], axis=1)
   dfRatio.columns = ['Open', 'High', 'Low', 'Close', 'Adjusted', 'Volume']
@@ -141,16 +145,16 @@ def alertDbs(dfRet):
     elif dblVal <= -DBS_LIMIT:
       strRet = DBS_BULL
     return strRet
-  
+
   strPrev = strStatus(dblPrev)
   strCurr = strStatus(dblCurr)
   #---------------
-  # Case 1: 
+  # Case 1:
   #   Return empty
   if strPrev == strCurr:
     return strSubject, strBody
   #---------------
-  # Case 2: 
+  # Case 2:
   #   Return alert
   if strCurr == DBS_NEUTRAL:
     strSubject = 'Dbs trend shift to NEUTRAL (bias to ' + strPrev + ')'
@@ -159,7 +163,7 @@ def alertDbs(dfRet):
     strBody = strBody + "[Dbs Chart](https://github.com/dennislwm/pyaction/blob/master/_ChartC_0.1_Dbs.png)" + NL + NL
     strBody = strBody + "[Pyaction Repo](https://github.com/dennislwm/pyaction)"
   #---------------
-  # Case 3: 
+  # Case 3:
   #   Return alert
   if strPrev == DBS_NEUTRAL:
     strSubject = 'Dbs trend shift to ' + strCurr
@@ -167,7 +171,7 @@ def alertDbs(dfRet):
     strBody = strBody + "Date: " + str(today) + NL + NL
     strBody = strBody + "[Dbs Chart](https://github.com/dennislwm/pyaction/blob/master/_ChartC_0.1_Dbs.png)" + NL + NL
     strBody = strBody + "[Pyaction Repo](https://github.com/dennislwm/pyaction)"
-  
+
   return strSubject, strBody
 
 """
@@ -180,8 +184,8 @@ def send_gmail(strSubject, strBody):
 
   if strGmail == '':
     return
-  
-  print("Send email " + strSubject) 
+
+  print("Send email " + strSubject)
   msg = MIMEMultipart()
   msg['Subject']  = strSubject
   msg['From']     = strGmail
