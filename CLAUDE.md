@@ -21,11 +21,11 @@ This is a Python-based financial monitoring system that:
 - `.github/workflows/pymonitor.yml`: Automated daily execution workflow
 
 ### Key Dependencies
-- **pyfxgit.ChartCls**: Custom charting library for financial data visualization
-- **yfinance**: Yahoo Finance data retrieval
-- **ta**: Technical analysis indicators (ROC - Rate of Change)
-- **pandas**: Data manipulation and analysis
-- **ruamel.yaml**: Configuration file handling
+- **pyfxgit.ChartCls**: Custom charting library for financial data visualization (v0.1.1)
+- **yfinance**: Yahoo Finance data retrieval (v0.2.58)
+- **ta**: Technical analysis indicators (ROC - Rate of Change) (v0.6.1)
+- **pandas**: Data manipulation and analysis (≥1.3.0)
+- **ruamel.yaml**: Configuration file handling (v0.16.12)
 
 ### Data Flow
 1. Download 52 weeks of stock data for XLU, VTI, SPY
@@ -123,7 +123,7 @@ Key constants defined in `pymonitor.py`:
 
 ### Automated Workflow (`pymonitor.yml`)
 The workflow runs daily at 00:01 UTC (`cron: '1 0 * * *'`) and:
-1. Sets up Python 3.8 environment on Ubuntu
+1. Sets up Python 3.9 environment on Ubuntu (upgraded from 3.8)
 2. Installs dependencies (`pip`, `flake8`, `requirements.txt`)
 3. Runs code quality checks with flake8
 4. Executes the monitoring script with GitHub secrets for email
@@ -229,3 +229,17 @@ gh run download <run-id>
 - Error handling for Yahoo Finance API failures
 - Graceful degradation if chart generation fails
 - Maintains data integrity across market holidays and weekends
+
+## Recent Updates
+
+### Version History
+- **2025-07-22**: Upgraded Python runtime from 3.8 to 3.9 in GitHub Actions workflow
+- **2025-07-21**: Updated pyfxgit dependency from v0.0.2 to v0.1.1 for improved chart generation
+- **2025-07-21**: Updated Python package versions in requirements.txt for security and compatibility
+- **2025-07-21**: Added comprehensive CLAUDE.md documentation for development guidance
+
+### Current Status
+- ✅ Python 3.9 runtime successfully deployed
+- ✅ Updated dependencies tested and working
+- ✅ GitHub Actions workflow running successfully with manual triggers
+- ✅ Email notifications and chart generation functional
